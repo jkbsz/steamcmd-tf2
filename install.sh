@@ -4,9 +4,9 @@
 set -e
 
 cat << EOC
-# Requites
+# Requirements
 #       Centos 7.0 64
-#               yum install glibc.i686 libstdc++.i686 unzip curl wget  ncurses-libs.i686
+#               yum update ; yum install glibc.i686 libstdc++.i686 unzip curl wget  ncurses-libs.i686
 EOC
 while true; do
 	read -p "Continue? [YN]" yn
