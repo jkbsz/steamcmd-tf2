@@ -7,7 +7,10 @@ cat << EOC
 # Requirements
 #       Centos 7.0 64
 #               yum update ; yum install glibc.i686 libstdc++.i686 unzip curl wget  ncurses-libs.i686
+#
 EOC
+
+
 while true; do
 	read -p "Continue? [YN]" yn
 	case $yn in
@@ -51,8 +54,11 @@ ${base_install}/steamcmd.sh +runscript $steamcmd_script
 # MetaMod, Source Mod
 
 function install_mmsm {
-	curl http://cdn.probablyaserver.com/sourcemod/mmsource-1.10.6-linux.tar.gz | tar xvz --overwrite --directory ${install_dir}/tf/
-	curl https://www.sourcemod.net/smdrop/1.7/sourcemod-1.7.3-git5280-linux.tar.gz | tar xvz --overwrite --directory ${install_dir}/tf/
+	# http://metamodsource.net/
+	curl http://cdn.probablyaserver.com/sourcemod/mmsource-1.10.6-linux.tar.gz | tar xz --overwrite --directory ${install_dir}/tf/
+
+	# http://www.sourcemod.net/
+	curl https://www.sourcemod.net/smdrop/1.7/$(curl https://www.sourcemod.net/smdrop/1.7/sourcemod-latest-linux) | tar xz --overwrite --directory ${install_dir}/tf/
 
 	while true; do
 		read -p "Admin Steam_ID (Q or empty to finish)" steamid
@@ -62,9 +68,9 @@ function install_mmsm {
 		esac
 	done
 	
-	echo "v--- admins_simple.ini ---v"
+	echo "v--- ${install_dir}/tf/addons/sourcemod/configs/admins_simple.ini ---v"
 	cat ${install_dir}/tf/addons/sourcemod/configs/admins_simple.ini
-	echo "^--- admins_simple.ini ---^"
+	echo "^--- ${install_dir}/tf/addons/sourcemod/configs/admins_simple.ini ---^"
 	
 }
 
@@ -106,9 +112,9 @@ function server_config {
 	echo "rcon_password $(cat /dev/urandom | tr -dc A-Za-z | head -c15)" >> ${install_dir}/tf/cfg/server.cfg
 	echo "sv_password $(cat /dev/urandom | tr -dc A-Za-z | head -c15)" >> ${install_dir}/tf/cfg/server.cfg
 	
-	echo "v--- server.cfg ---v"
+	echo "v--- ${install_dir}/tf/cfg/server.cfg ---v"
 	cat ${install_dir}/tf/cfg/server.cfg
-	echo "^--- server.cfg ---^"
+	echo "^--- ${install_dir}/tf/cfg/server.cfg ---^"
 }
 
 while true; do
